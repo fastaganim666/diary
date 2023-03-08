@@ -1,0 +1,31 @@
+{% extends 'bookmark/base.html' %}
+
+
+{% block form %}<div class="bookmarks-add">
+<form method="post" action="{% url 'index_view' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Добавить</button>
+</form>
+</div>
+{% endblock form %}
+
+
+{% block categories %}
+<div class="bookmarks-category">Категория:
+    <a href="{% url 'index_view' %}">Все закладки</a> |
+    {% for category in categories %}
+    <a href="{{ category.get_absolute_url }}">{{ category.name }}</a> |
+    {% endfor %}
+    <a href="{% url 'create_category' %}"><b>Добавить/удалить категорию</b></a>
+        </div>
+
+{% endblock categories %}
+
+{% block content %}
+<div class="bookmarks-title"><h3>{{ active_category }}</h3></div>
+{% for bookmark in bookmarks %}
+<div class="bookmark"><p><a href="{{ bookmark.url }}" target="_blank">{{ bookmark.url | truncatechars:50  }}</a> - {{ bookmark.description }}</p><p><a href="{{ bookmark.get_absolute_url }}">Редактировать</a> | <a href="{% url 'delete' bookmark.id %}">Удалить</a></p></div>
+{% endfor %}
+
+{% endblock content %}

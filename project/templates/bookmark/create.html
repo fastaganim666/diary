@@ -1,0 +1,18 @@
+{% extends 'bookmark/base.html' %}
+
+
+{% block form %}<div class="bookmarks-add">
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Добавить</button>
+{% endblock form %}
+
+
+{% block content %}
+    {% for category in categories %}
+    <ul>
+        <li>{{ category.name }} <a href="{% url 'delete_category' category.id %}">(удалить)</a></li>
+    </ul>
+    {% endfor %}
+{% endblock content %}
