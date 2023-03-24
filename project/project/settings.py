@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bookmark.apps.BookmarkConfig',
+    'purpose.apps.PurposeConfig',
+    'planner.apps.PlannerConfig',
 ]
 
 MIDDLEWARE = [

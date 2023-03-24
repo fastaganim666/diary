@@ -21,8 +21,8 @@
         <div class="logo"><img src="{% static 'images/bookmark.png' %}" width="43px" height="53px">Многофунциональный онлайн дневник</div>
         <ul>
             <li>Меню</li>
-            <li> <a href="/bookmark">Закладки</a></li>
-            <li> <a href="/purpose">Цели</a></li>
+            <li> <a href="{% url 'bookmark_main' %}">Закладки</a></li>
+            <li> <a href="{% url 'purpose_main' %}">Цели</a></li>
             <li> <a href="#">Планировщик</a></li>
             <li> <a href="#">Личный дневник</a></li>
             <li> <a href="#">Заметки</a></li>
