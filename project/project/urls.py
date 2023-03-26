@@ -20,5 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('bookmark/', include('bookmark.urls')),
     path('purpose/', include('purpose.urls')),
+    path('planner/', include('planner.urls')),
     path('', include('bookmark.urls')),
 ]
