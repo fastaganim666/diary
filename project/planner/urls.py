@@ -9,5 +9,4 @@ urlpatterns = [
     path('edit/<int:pk>/', EditTask.as_view(), name='task_edit'),
     path('time/add/<int:pk>/', AddTime.as_view(), name='time_add'),
     path('time/delete/<int:pk>/', DeleteTime.as_view(), name='time_delete'),
-    # path('skill/not_done/<int:pk>/', not_skill_done, name='not_skill_done'),
 ]

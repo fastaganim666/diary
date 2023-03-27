@@ -41,6 +41,15 @@ border-bottom: 1px solid #cccccc;
 display:flex;
 justify-content: space-between;
 }
+
+.pagination{
+padding:10px;
+border-bottom: 1px solid #cccccc;
+display:flex;
+justify-content: center;
+}
+
+
 .bookmarks-category{
 padding:10px;
 border-bottom: 1px solid #cccccc;

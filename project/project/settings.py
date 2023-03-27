@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'bookmark.apps.BookmarkConfig',
     'purpose.apps.PurposeConfig',
     'planner.apps.PlannerConfig',
+    'django_filters',
 ]
 
 MIDDLEWARE = [

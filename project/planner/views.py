@@ -8,35 +8,47 @@ from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from .forms import *
+from .filters import TaskFilter
 
 
 class MainPurpose(ListView):
     model = TaskDay
     paginate_by = 10
     template_name = 'planner/main.html'
+    context_object_name = 'tasks'
+
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        self.filterset = TaskFilter(self.request.GET, queryset.filter(user=self.request.user.id))
+        return self.filterset.qs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Мои планы'
-        context['tasks'] = TaskDay.objects.filter(user=self.request.user.id)
+        context['filterset'] = self.filterset
         return context
 
 
 class DatePurpose(ListView):
     model = TaskDay
     paginate_by = 10
-    template_name = 'planner/main.html'
+    ordering = 'date'
+    template_name = 'planner/date_filter.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Мои планы'
         context['tasks'] = TaskDay.objects.filter(user=self.request.user.id)
+        print(self.kwargs['day'])
+        context['tasks'] = context['tasks'].filter(date__day=self.kwargs['day'], date__month=self.kwargs['month'], date__year=self.kwargs['year'])
         return context
 
 
 class CreateTask(CreateView):
     model = TaskDay
-    fields = ['name', 'date', 'tomatoes']
+    # fields = ['name', 'date', 'tomatoes']
+    form_class = AddTaskForm
     template_name = 'planner/create_task.html'
 
     def post(self, request, *args, **kwargs):
