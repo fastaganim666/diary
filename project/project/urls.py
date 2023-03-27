@@ -21,5 +21,7 @@ urlpatterns = [
     path('bookmark/', include('bookmark.urls')),
     path('purpose/', include('purpose.urls')),
     path('planner/', include('planner.urls')),
+    path('notebook/', include('notebook.urls')),
     path('', include('bookmark.urls')),
+    path('tinymce/', include('tinymce.urls')),
 ]

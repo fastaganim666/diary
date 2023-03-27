@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
-
+    {% block head %}{% endblock %}
     <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
@@ -18,14 +18,13 @@
 <body>
 <div class="main">
     <div class="menu">
-        <div class="logo"><img src="{% static 'images/bookmark.png' %}" width="43px" height="53px">Многофунциональный онлайн дневник</div>
+        <div class="logo"><img src="{% static 'images/bookmark.png' %}" width="43px" height="53px"><b>Многофунциональный онлайн дневник</b></div>
         <ul>
-            <li>Меню</li>
+            <li><b>Меню</b></li>
             <li> <a href="{% url 'bookmark_main' %}">Закладки</a></li>
             <li> <a href="{% url 'purpose_main' %}">Цели</a></li>
             <li> <a href="{% url 'planner_main' %}">Планировщик</a></li>
-            <li> <a href="#">Личный дневник</a></li>
-            <li> <a href="#">Конспекты</a></li>
+            <li> <a href="{% url 'notebook_main' %}">Тетрадь</a></li>
         </ul>
     </div>
 

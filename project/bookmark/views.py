@@ -72,9 +72,11 @@ class CategoryBookmark(FormView, ListView):
         context['bookmarks'] = Bookmark.objects.filter(user=User.objects.get(id=self.request.user.id),
                                                        category_id=self.kwargs['pk'])
         context['categories'] = Category.objects.filter(user=User.objects.get(id=self.request.user.id))
-        category = context['bookmarks'][0]
-        print(category.category.name)
-        context['title'] = category.category.name
+        if len(context['bookmarks']) != 0:
+            category = context['bookmarks'][0]
+            context['title'] = category.category.name
+        else:
+            context['title'] = 'Пусто'
         return context
 
     def post(self, request, *args, **kwargs):

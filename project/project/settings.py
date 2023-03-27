@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'bookmark.apps.BookmarkConfig',
     'purpose.apps.PurposeConfig',
     'planner.apps.PlannerConfig',
+    'notebook.apps.NotebookConfig',
     'django_filters',
+    'tinymce',
 ]
 
 MIDDLEWARE = [
@@ -130,3 +132,12 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+
+TINYMCE_DEFAULT_CONFIG = {
+    'plugins': "table,spellchecker,paste,searchreplace",
+    'theme': "silver",
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 10,
+    'width':800,
+    'height':600,
+}
