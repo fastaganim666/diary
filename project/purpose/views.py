@@ -19,12 +19,13 @@ class MainPurpose(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Мои цели'
+        context['h1'] = 'Мои цели'
         return context
 
 
 class CreatePurpose(CreateView):
     model = Purpose
-    fields = ['name', 'main', 'people', 'priority', 'deadline']
+    form_class = CreateEditPurposeForm
     template_name = 'purpose/create_purpose.html'
 
     def post(self, request, *args, **kwargs):
@@ -45,6 +46,7 @@ class CreatePurpose(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['h1'] = 'Создание цели'
         return context
 
 
@@ -61,6 +63,7 @@ class DetailPurpose(DetailView, FormView):
         context['skills'] = Skill.objects.filter(purpose=kwargs['object'])
         context['questions'] = Question.objects.filter(purpose=kwargs['object'])
         context['comments'] = Comment.objects.filter(purpose=kwargs['object'])
+        context['h1'] = 'Цель'
         return context
 
     def form_valid(self, form):
@@ -82,14 +85,24 @@ class DeletePurpose(DeleteView):
     def get_success_url(self):
         return reverse_lazy('purpose_main')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['h1'] = 'Удалить цель'
+        return context
+
 
 class EditPurpose(UpdateView):
     model = Purpose
     template_name = 'purpose/edit_purpose.html'
-    fields = ['name', 'main', 'people', 'priority', 'deadline', 'achieved', 'achievement_date', ]
+    form_class = CreateEditPurposeForm
 
     def get_success_url(self):
         return reverse_lazy('purpose_detail', args=(self.object.id,))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['h1'] = 'Редактировать цель'
+        return context
 
 
 class CreateStep(CreateView):
@@ -99,7 +112,7 @@ class CreateStep(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print(self.kwargs)
+        context['h1'] = 'Создать шаг цели'
         return context
 
     def post(self, request, *args, **kwargs):
@@ -130,6 +143,10 @@ class DeleteStep(DeleteView):
         print(purpose_id)
         return reverse_lazy('purpose_detail', args=(purpose_id,))
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['h1'] = 'Удалить шаг'
+
 
 def step_done(request, pk=None):
     step = Step.objects.get(id=pk)
@@ -152,7 +169,7 @@ class CreateConstraint(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print(self.kwargs)
+        context['h1'] = 'Добавить огрничение'
         return context
 
     def post(self, request, *args, **kwargs):
@@ -182,6 +199,11 @@ class DeleteConstraint(DeleteView):
         constraint_id = self.object.purpose.id
         return reverse_lazy('purpose_detail', args=(constraint_id,))
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['h1'] = 'Удалить ограничение'
+        return context
+
 
 def constraint_done(request, pk=None):
     constraint = Constraint.objects.get(id=pk)
@@ -204,7 +226,7 @@ class CreateSkill(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print(self.kwargs)
+        context['h1'] = 'Добавить навык'
         return context
 
     def post(self, request, *args, **kwargs):
@@ -233,6 +255,11 @@ class DeleteSkill(DeleteView):
         print(self.object)
         constraint_id = self.object.purpose.id
         return reverse_lazy('purpose_detail', args=(constraint_id,))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['h1'] = 'Удалить навык'
+        return context
 
 
 def skill_done(request, pk=None):
@@ -275,6 +302,11 @@ class CreateQuestion(CreateView):
     def get_success_url(self):
         return reverse_lazy('purpose_detail', args=(self.object.purpose.id,))
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['h1'] = 'Добавить вопрос'
+        return context
+
 
 class DeleteQuestion(DeleteView):
     model = Question
@@ -286,6 +318,11 @@ class DeleteQuestion(DeleteView):
         constraint_id = self.object.purpose.id
         return reverse_lazy('purpose_detail', args=(constraint_id,))
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['h1'] = 'Удалить вопрос'
+        return context
+
 class EditQuestion(UpdateView):
     model = Question
     template_name = 'purpose/edit_question.html'
@@ -296,6 +333,11 @@ class EditQuestion(UpdateView):
         constraint_id = self.object.purpose.id
         return reverse_lazy('purpose_detail', args=(constraint_id,))
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['h1'] = 'Редкатировать вопрос'
+        return context
+
 
 class DeleteComment(DeleteView):
     model = Comment
@@ -304,3 +346,8 @@ class DeleteComment(DeleteView):
 
     def get_success_url(self):
         return reverse_lazy('purpose_detail', args=(self.object.purpose.id,))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['h1'] = 'Удалить комментрий'
+        return context

@@ -33,20 +33,20 @@
     <p>
         <b>Дедлайн цели?</b>
     <br>
-    {{ purpose.deadline }}
+    {% if purpose.deadline %}{{ purpose.deadline }} {% else %} Не задано {% endif %}
     </p>
 
     <p>
-        <b>Цели достигнута?</b>
+        <b>Цель достигнута?</b>
     <br>
-    {{ purpose.achieved }}
+        {% if purpose.achieved %} ДА! {% else %} Пока нет {% endif %}
     </p>
     <hr>
     <p>
     <b>Какие шаги нужно проделать, чтобы достичь эту цель:</b>
         <br>
         {% for step in steps %}
-        {% if step.completed %} + {% else %} - {% endif %}{{ step.name }} (<a href="{% url 'step_delete' step.id %}">удалить</a> |
+        {% if step.completed %} <span class="is_done"> {% else %} <span> {% endif %}{{ step.name }}</span> (<a href="{% url 'step_delete' step.id %}">удалить</a> |
         {% if step.completed %}<a href="{% url 'not_step_done' step.id %}">не выполнено</a>)
         {% else %}<a href="{% url 'step_done' step.id %}">выполнено</a>){% endif %}
         <br>
@@ -59,7 +59,7 @@
         <b>Какие ограничения мешают достичь эту цель:</b>
         <br>
         {% for constraint in constraints %}
-        {% if constraint.completed %} + {% else %} - {% endif %}{{ constraint.name }} (<a href="{% url 'constraint_delete' constraint.id %}">удалить</a> |
+    {% if constraint.completed %} <span class="is_done"> {% else %} <span> {% endif %}{{ constraint.name }}</span> (<a href="{% url 'constraint_delete' constraint.id %}">удалить</a> |
         {% if constraint.completed %}<a href="{% url 'not_constraint_done' constraint.id %}">не выполнено</a>)
         {% else %}<a href="{% url 'constraint_done' constraint.id %}">выполнено</a>){% endif %}
         <br>
@@ -72,7 +72,7 @@
         <b>Какие нужны навыки, чтобы достичь эту цель:</b>
         <br>
         {% for skill in skills %}
-        {% if skill.completed %} + {% else %} - {% endif %}{{ skill.name }} (<a href="{% url 'skill_delete' skill.id %}">удалить</a> |
+        {% if skill.completed %} <span class="is_done"> {% else %} <span> {% endif %}{{ skill.name }}</span> (<a href="{% url 'skill_delete' skill.id %}">удалить</a> |
         {% if skill.completed %}<a href="{% url 'not_skill_done' skill.id %}">не выполнено</a>)
         {% else %}<a href="{% url 'skill_done' skill.id %}">выполнено</a>){% endif %}
         <br>
@@ -100,7 +100,7 @@
     <b>Как происхдит процесс достижения цели? Напишите комментарии:</b>
     <form method="post">{% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Send message">
+    <input type="submit" value="Отправить сообщение">
     </form>
 
     <p>

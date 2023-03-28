@@ -15,8 +15,11 @@ class Note(models.Model):
     def __str__(self):
         return f'{self.title}'
 
-    # def get_absolute_url(self):
-    #     return reverse('task_detail', kwargs={'pk': self.pk})
+    def get_absolute_url(self):
+        return reverse('notebook_detail', kwargs={'pk': self.pk})
+
+    class Meta:
+        ordering = ['id', ]
 
 
 class NoteCategory(models.Model):
@@ -25,3 +28,9 @@ class NoteCategory(models.Model):
 
     def __str__(self):
         return f'{self.name}'
+
+    def get_absolute_url(self):
+        return reverse('notebook_category', kwargs={'pk': self.pk})
+
+    class Meta:
+        ordering = ['id', ]

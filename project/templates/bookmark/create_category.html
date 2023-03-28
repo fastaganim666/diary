@@ -8,7 +8,7 @@
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Update">
+    <input type="submit" value="Добавить">
 </form>
 </div>
 {% endblock form %}
@@ -16,6 +16,7 @@
 
 {% block content %}
 <div class="bookmarks-add">
+    <h3>Список категорий</h3>
     {% for category in categories %}
     {% if category.parent_category %}
     {{ category.parent_category }} ({{ category.name }}) <a href="{% url 'category_delete' category.pk %}">Удалить</a> <br>

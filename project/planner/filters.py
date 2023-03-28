@@ -9,7 +9,7 @@ class DateInput(forms.DateInput):
 
 
 class TaskFilter(FilterSet):
-    date = DateFilter(widget=DateInput(attrs={'type': 'date'}))
+    date = DateFilter(widget=DateInput(attrs={'type': 'date'}), label='Выберите дату')
     class Meta:
         model = TaskDay
         fields = ['date', ]

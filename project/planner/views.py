@@ -11,7 +11,7 @@ from .forms import *
 from .filters import TaskFilter
 
 
-class MainPurpose(ListView):
+class MainTask(ListView):
     model = TaskDay
     paginate_by = 10
     template_name = 'planner/main.html'
@@ -27,27 +27,12 @@ class MainPurpose(ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Мои планы'
         context['filterset'] = self.filterset
-        return context
-
-
-class DatePurpose(ListView):
-    model = TaskDay
-    paginate_by = 10
-    ordering = 'date'
-    template_name = 'planner/date_filter.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Мои планы'
-        context['tasks'] = TaskDay.objects.filter(user=self.request.user.id)
-        print(self.kwargs['day'])
-        context['tasks'] = context['tasks'].filter(date__day=self.kwargs['day'], date__month=self.kwargs['month'], date__year=self.kwargs['year'])
+        context['h1'] = 'Планировщик задач'
         return context
 
 
 class CreateTask(CreateView):
     model = TaskDay
-    # fields = ['name', 'date', 'tomatoes']
     form_class = AddTaskForm
     template_name = 'planner/create_task.html'
 
@@ -69,6 +54,7 @@ class CreateTask(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['h1'] = 'Добавить задачу'
         return context
 
     def get_success_url(self):
@@ -84,6 +70,7 @@ class DetailTask(DetailView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Мои планы'
         context['times'] = TimeDay.objects.filter(task_id=self.kwargs['pk'])
+        context['h1'] = 'Задача'
         return context
 
 
@@ -94,6 +81,7 @@ class DeleteTask(DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Мои планы'
+        context['h1'] = 'Удалить задачу'
         return context
 
     def get_success_url(self):
@@ -103,17 +91,18 @@ class DeleteTask(DeleteView):
 class EditTask(UpdateView):
     model = TaskDay
     template_name = 'planner/edit_task.html'
-    fields = ['name', 'date', 'tomatoes', 'tomatoes_done', 'is_done']
+    form_class = EditTaskForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Мои планы'
+        context['h1'] = 'Редактировать задачу'
         return context
 
 
 class AddTime(CreateView):
     model = TimeDay
-    fields = ['start', 'end', ]
+    form_class = AddTimeForm
     template_name = 'planner/add_time.html'
 
     def post(self, request, *args, **kwargs):
@@ -134,6 +123,7 @@ class AddTime(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['h1'] = 'Добавить время'
         return context
 
     def get_success_url(self):
@@ -147,6 +137,7 @@ class DeleteTime(DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Мои планы'
+        context['h1'] = 'Удалить время'
         return context
 
     def get_success_url(self):

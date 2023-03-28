@@ -16,11 +16,13 @@
         <a href="{% url 'time_add' task.id %}">Добавить</a></p>
     <p>Томатов выпонено/запланировано:
     <br>
-        {{ task.tomatoes_done }}/{{ task.tomatoes }}
+        {% if task.tomatoes_done %} {{ task.tomatoes_done }} {% else %} - {% endif %}
+        /
+        {% if task.tomatoes %} {{ task.tomatoes }} {% else %} - {% endif %}
     </p>
     <p>Задча выполнена:
     <br>
-        {{ task.is_done }}
+        {% if task.is_done %} Да {% else %} Нет {% endif %}
     </p>
 </div>
 

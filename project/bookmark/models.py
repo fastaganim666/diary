@@ -18,6 +18,9 @@ class Category(models.Model):
     def get_absolute_url(self):
         return reverse('bookmark_category', kwargs={'pk': self.pk})
 
+    class Meta:
+        ordering = ['id', ]
+
 
 class Bookmark(models.Model):
     url = models.URLField()
@@ -31,3 +34,6 @@ class Bookmark(models.Model):
 
     def get_absolute_url(self):
         return reverse('bookmark_edit', kwargs={'pk': self.pk})
+
+    class Meta:
+        ordering = ['id', ]

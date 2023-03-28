@@ -7,9 +7,9 @@
 {% block form %}<div class="bookmarks-add">
 <form method="post">
     {% csrf_token %}
-    <p>Are you sure you want to delete "{{ object }}"?</p>
+    <p>Вы уверены, что хотите удалить закладку <b>"{{ object }}"</b>?</p>
     {{ form.as_p }}
-    <input type="submit" value="Update">
+    <input type="submit" value="Удалить">
 </form>
 </div>
 {% endblock form %}

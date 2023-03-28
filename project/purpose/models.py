@@ -15,6 +15,9 @@ class Purpose(models.Model):
     achievement_date = models.DateField(null=True, default=None, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    class Meta:
+        ordering = ['id', ]
+
     def __str__(self):
         return f'{self.name}'
 
@@ -34,12 +37,18 @@ class Step(models.Model):
     def get_absolute_url(self):
         return reverse('purpose_detail', kwargs={'pk': self.purpose.pk})
 
+    class Meta:
+        ordering = ['id', ]
+
 
 class Constraint(models.Model):
     name = models.TextField()
     completed = models.BooleanField(default=False)
     completion_date = models.DateField(null=True, default=None, blank=True)
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['id', ]
 
     def __str__(self):
         return f'{self.name}'
@@ -57,6 +66,9 @@ class Skill(models.Model):
     completion_date = models.DateField(null=True, default=None, blank=True)
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE)
 
+    class Meta:
+        ordering = ['id', ]
+
     def __str__(self):
         return f'{self.name}'
 
@@ -71,6 +83,9 @@ class Question(models.Model):
     date_answered = models.DateField(auto_now=True)
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE)
 
+    class Meta:
+        ordering = ['id', ]
+
     def __str__(self):
         return f'{self.name}'
 
@@ -80,6 +95,9 @@ class Comment(models.Model):
     add_date = models.DateField(auto_now_add=True)
     edit_date = models.DateField(auto_now=True, null=True, blank=True)
     purpose = models.ForeignKey(Purpose, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['-add_date', ]
 
     def __str__(self):
         return f'{self.text}'

@@ -17,6 +17,9 @@ class TaskDay(models.Model):
     def get_absolute_url(self):
         return reverse('task_detail', kwargs={'pk': self.pk})
 
+    class Meta:
+        ordering = ['id', ]
+
 
 class TimeDay(models.Model):
     start = models.TimeField(null=True, default=None, blank=True)
@@ -29,4 +32,7 @@ class TimeDay(models.Model):
 
     def get_absolute_url(self):
         return reverse('task_detail', kwargs={'pk': self.pk})
+
+    class Meta:
+        ordering = ['id', ]
 

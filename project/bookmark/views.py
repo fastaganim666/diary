@@ -20,6 +20,7 @@ class MainBookmark(FormView, ListView):
         context['categories'] = Category.objects.filter(user=User.objects.get(id=self.request.user.id))
         context['active_category'] = 'Все закладки'
         context['title'] = 'Приложение закладки'
+        context['h1'] = 'Закладки'
         return context
 
     def post(self, request, *args, **kwargs):
@@ -41,7 +42,7 @@ class MainBookmark(FormView, ListView):
 
 class EditBookmark(UpdateView):
     model = Bookmark
-    fields = ['url', 'description', 'aliace', 'category']
+    form_class = UpdateBookmarkForm
     template_name = 'bookmark/edit_bookmark.html'
 
     def get_success_url(self):
@@ -51,6 +52,7 @@ class EditBookmark(UpdateView):
         context = super().get_context_data(**kwargs)
         print(kwargs)
         context['title'] = 'Редактирование закладки'
+        context['h1'] = 'Редактирование закладки'
         return context
 
 
@@ -58,6 +60,11 @@ class DeleteBookmark(DeleteView):
     model = Bookmark
     template_name = 'bookmark/delete_bookmark.html'
     success_url = reverse_lazy('bookmark_main')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['h1'] = 'Удаление закладки'
+        return context
 
 
 class CategoryBookmark(FormView, ListView):
@@ -72,6 +79,7 @@ class CategoryBookmark(FormView, ListView):
         context['bookmarks'] = Bookmark.objects.filter(user=User.objects.get(id=self.request.user.id),
                                                        category_id=self.kwargs['pk'])
         context['categories'] = Category.objects.filter(user=User.objects.get(id=self.request.user.id))
+        context['h1'] = 'Закладки'
         if len(context['bookmarks']) != 0:
             category = context['bookmarks'][0]
             context['title'] = category.category.name
@@ -98,7 +106,7 @@ class CategoryBookmark(FormView, ListView):
 
 class AddCategory(CreateView):
     model = Category
-    fields = ['name', 'parent_category']
+    form_class = AddCategoryForm
     template_name = 'bookmark/create_category.html'
 
     def post(self, request, *args, **kwargs):
@@ -117,6 +125,7 @@ class AddCategory(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.filter(user=User.objects.get(id=self.request.user.id))
+        context['h1'] = 'Редактирование категорий закладок'
         return context
 
 
@@ -127,3 +136,8 @@ class DeleteCategory(DeleteView):
 
     def get_success_url(self):
         return reverse_lazy('category_add')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['h1'] = 'Удаление категории'
+        return context
