@@ -127,6 +127,7 @@ class AddTime(CreateView):
         return context
 
     def get_success_url(self):
+        print(self.kwargs['pk'])
         return reverse_lazy('task_detail', args=(self.kwargs['pk'],))
 
 
@@ -142,3 +143,13 @@ class DeleteTime(DeleteView):
 
     def get_success_url(self):
         return reverse_lazy('task_detail', args=(self.object.task_id,))
+
+
+def add_tomato(request, pk=None):
+    task = TaskDay.objects.get(id=pk)
+    if task.tomatoes_done:
+        task.tomatoes_done += 1
+    else:
+        task.tomatoes_done = 1
+    task.save()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

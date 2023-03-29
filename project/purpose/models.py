@@ -8,7 +8,8 @@ class Purpose(models.Model):
     name = models.TextField()
     main = models.BooleanField(default=False)
     people = models.TextField(null=True, default=None, blank=True)
-    priority = models.IntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(5)])
+    priority = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)],
+                                   null=True, default=None, blank=True)
     deadline = models.DateField(null=True, default=None, blank=True)
     add_date = models.DateField(auto_now_add=True)
     achieved = models.BooleanField(default=False)

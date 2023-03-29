@@ -14,6 +14,11 @@ class MainBookmark(FormView, ListView):
     template_name = 'bookmark/main.html'
     form_class = AddBookmarkForm
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user.id
+        return kwargs
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['bookmarks'] = Bookmark.objects.filter(user=User.objects.get(id=self.request.user.id))
@@ -67,11 +72,10 @@ class DeleteBookmark(DeleteView):
         return context
 
 
-class CategoryBookmark(FormView, ListView):
+class CategoryBookmark(ListView):
     model = Bookmark
     paginate_by = 10
     template_name = 'bookmark/category.html'
-    form_class = AddBookmarkForm
 
     def get_context_data(self, **kwargs):
         print(kwargs)
@@ -127,6 +131,11 @@ class AddCategory(CreateView):
         context['categories'] = Category.objects.filter(user=User.objects.get(id=self.request.user.id))
         context['h1'] = 'Редактирование категорий закладок'
         return context
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user.id
+        return kwargs
 
 
 class DeleteCategory(DeleteView):

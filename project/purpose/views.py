@@ -20,6 +20,7 @@ class MainPurpose(ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Мои цели'
         context['h1'] = 'Мои цели'
+        context['purposes'] = Purpose.objects.filter(user=User.objects.get(id=self.request.user.id))
         return context
 
 
@@ -107,7 +108,7 @@ class EditPurpose(UpdateView):
 
 class CreateStep(CreateView):
     model = Step
-    fields = ['name', ]
+    form_class = CreateStepForm
     template_name = 'purpose/create_step.html'
 
     def get_context_data(self, **kwargs):
@@ -209,7 +210,8 @@ def constraint_done(request, pk=None):
     constraint = Constraint.objects.get(id=pk)
     constraint.completed = True
     constraint.save()
-    return HttpResponseRedirect(constraint.get_absolute_url())
+    print(request.META.get('HTTP_REFERER'))
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 def not_constraint_done(request, pk=None):

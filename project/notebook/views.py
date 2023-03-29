@@ -76,6 +76,11 @@ class CreateNotebook(CreateView):
         context['h1'] = 'Добавить запись в тетрадь'
         return context
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user.id
+        return kwargs
+
 
 class DeleteNotebook(DeleteView):
     model = Note

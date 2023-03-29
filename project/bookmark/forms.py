@@ -1,12 +1,12 @@
 from django import forms
 from .models import *
-from django.contrib.auth.models import User
 
 
 class AddBookmarkForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['category'].label = 'Категория'
+        user = kwargs.pop('user')
+        super().__init__(**kwargs)
+        self.fields['category'].queryset = Category.objects.filter(user=user)
 
     url = forms.URLField(label='Ссылка', required=True)
     description = forms.CharField(label='Описание', required=False)
@@ -19,9 +19,11 @@ class AddBookmarkForm(forms.ModelForm):
 
 class AddCategoryForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user')
         super().__init__(*args, **kwargs)
         self.fields['name'].label = 'Название категории'
         self.fields['parent_category'].label = 'Родительская категория'
+        self.fields['parent_category'].queryset = Category.objects.filter(user=user)
 
     class Meta:
         model = Category

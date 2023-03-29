@@ -18,7 +18,7 @@
 <body>
 <div class="main">
     <div class="menu">
-        <div class="logo"><img src="{% static 'images/bookmark.png' %}" width="43px" height="53px"><b>Многофунциональный онлайн дневник</b></div>
+        <div class="logo"><a href="{% url 'index' %}"><img src="{% static 'images/bookmark.png' %}" width="43px" height="53px"></a><b>Многофунциональный онлайн дневник</b></div>
         <ul>
             <li><b>Меню</b></li>
             <li> <a href="{% url 'bookmark_main' %}">Закладки</a></li>

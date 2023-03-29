@@ -25,7 +25,7 @@ class TimeDay(models.Model):
     start = models.TimeField(null=True, default=None, blank=True)
     end = models.TimeField(null=True, default=None, blank=True)
     is_done = models.BooleanField(default=False, blank=True)
-    task = models.ForeignKey(TaskDay, on_delete=models.CASCADE)
+    task = models.ForeignKey(TaskDay, on_delete=models.CASCADE, verbose_name='Время', related_name='time')
 
     def __str__(self):
         return f'{self.start}-{self.end}'

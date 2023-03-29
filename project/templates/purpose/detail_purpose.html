@@ -21,13 +21,13 @@
     <p>
         <b>Какие люди помогут в достижении данной цели?</b>
     <br>
-    {{ purpose.people }}
+        {% if purpose.people %} {{ purpose.people }} {% else %} - {% endif %}
     </p>
 
     <p>
         <b>Насклько приоритетна цель?</b>
     <br>
-    {{ purpose.priority }}
+        {% if purpose.priority %} {{ purpose.priority }} {% else %} Не указано {% endif %}
     </p>
 
     <p>

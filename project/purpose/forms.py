@@ -29,3 +29,16 @@ class CreateEditPurposeForm(forms.ModelForm):
         }
 
 
+class CreateStepForm(forms.ModelForm):
+    class Meta:
+        model = Step
+        fields = ['name', ]
+        widgets = {
+            'name': forms.Textarea(attrs={'cols': 60, 'rows': 3, }),
+        }
+
+        labels = {
+            'name': 'Название',
+        }
+
+

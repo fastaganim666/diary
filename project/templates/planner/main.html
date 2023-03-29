@@ -23,9 +23,34 @@
    </form>
  </div>
 <div class="bookmarks-title"><h3>Мои планы</h3></div>
+
+
+<table style="width: 95%;" border="0">
+<tbody>
+<tr class="planner-table">
+<td style="width: 20%;">Название</td>
+<td style="width: 20%; ">Время</td>
+<td style="width: 20%;">Томаты</td>
+<td style="width: 20%;">Дата</td>
+<td style="width: 20%;">Выполнено</td>
+</tr>
 {% for task in tasks %}
-<div class="bookmark"><p><a href="{% url 'task_detail' task.pk %}">{{ task.name }}</a> ({{ task.date }}) </p><p><a href="{% url 'task_delete' task.pk %}">Удалить</a></p></div>
+<tr style="height: 22.3906px;">
+<td style="width: 20%;"><a href="{% url 'task_detail' task.pk %}">{{ task.name }}</a></td>
+<td style="width: 20%;">{% if task.time.all %}{% for time in task.time.all %} {{ time }} <br>{% endfor %}{% else %} - {% endif %}</td>
+<td style="width: 20%;">{% if task.tomatoes_done %}{{ task.tomatoes_done }}{% else %} - {% endif %} <a href="{% url 'add_tomato' task.pk %}">(+)</a>
+    /
+    {% if task.tomatoes %}{{ task.tomatoes }}{% else %} - {% endif %}</td>
+<td style="width: 20%;">{{ task.date }}</td>
+<td style="width: 20%;">{% if task.is_done %} Да {% else %} Нет {% endif %}</td>
+</tr>
 {% endfor %}
+</tbody>
+</table>
+
+
+
+
 
 <div class="pagination">
    {% if page_obj.has_previous %}
